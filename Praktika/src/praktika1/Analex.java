@@ -193,7 +193,7 @@ public class Analex {
 
 		lortuTokena();
 		String token_mota = getTokenMota();
-		while (token_mota.equals("BEREIZLEA")) {
+		while (token_mota.equals("BEREIZLEA") || token_mota.equals("IRUZKINA")) {
 			lortuTokena();
 			token_mota = getTokenMota();
 		}
