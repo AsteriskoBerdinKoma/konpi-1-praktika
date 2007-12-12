@@ -156,13 +156,13 @@ public class AnalizatzaileSintaktikoa {
 
 	        private void Aukerazko_id() { 
 
-	          String id_izena;
+		          String id_izena;
 
-	          if (look.getTokenMota().equals("identificador")) {
-	              Emparejar("identificador");
-	          }
+		          if (look.T_token().equals("ID")) {
+		              Emparejar("ID");
+		          }
 
-	        }//end Aukerazko_id
+		        }//end Aukerazko_id
 
 
 	        private String Aldagaia()   {
@@ -236,12 +236,12 @@ public class AnalizatzaileSintaktikoa {
 
 
 	        private String Gaia()   {
-	        
-	            String gaia_izena, gaia_prima_hi, faktore_izena, gaia_prima_izena;
+		        
+	            String gaia_izena, gaia_prima_hizena, faktore_izena, gaia_prima_izena;
 	            
 	            faktore_izena = Faktore();
-	            gaia_prima_hi = faktore_izena;
-	            gaia_prima_izena = Gaia_prima(gaia_prima_hi);
+	            gaia_prima_hizena = faktore_izena;
+	            gaia_prima_izena = Gaia_prima(gaia_prima_hizena);
 	            gaia_izena = gaia_prima_izena;
 	        
 	        return gaia_izena;
@@ -273,16 +273,16 @@ public class AnalizatzaileSintaktikoa {
 
 	        private String Adierazpen_bakuna() {  
 
-	                String adierazpen_bakuna_izena, ad_bakuna_prima_hi, gaia_izena, ad_bakuna_prima_izena;
-	                
-	                gaia_izena = Gaia();
-	                ad_bakuna_prima_hi = gaia_izena;
-	                ad_bakuna_prima_izena = Ad_bakuna_prima(ad_bakuna_prima_hi);
-	                adierazpen_bakuna_izena = ad_bakuna_prima_izena;
+                String adierazpen_bakuna_izena, adierazpen_bakuna_prima_hizena, gaia_izena, ad_bakuna_prima_izena;
+                
+                gaia_izena = Gaia();
+                adierazpen_bakuna_prima_hizena = gaia_izena;
+                ad_bakuna_prima_izena = Ad_bakuna_prima(adierazpen_bakuna_prima_hizena);
+                adierazpen_bakuna_izena = ad_bakuna_prima_izena;
 
-	                return adierazpen_bakuna_izena;
+                return adierazpen_bakuna_izena;
 
-	        }   //  end Adierazpen_bakuna
+        }   //  end Adierazpen_bakuna
 
 
 	        private String Erag_erl()   {
@@ -321,50 +321,7 @@ public class AnalizatzaileSintaktikoa {
 	            return adierazpena;
 	            
 	        }   // end Adierazpena
-
-	         private Atrib S_break() {
-
-	                 Atrib sententzia_break, sententzia_prima_break;
-
-	                 Emparejar("break");
-	                 sententzia_prima_break = Sententzia_prima();
-	                 Emparejar(";");
-	                 sententzia_break = sententzia_prima_break;
-	                 
-	                 return sententzia_break;
-
-	         }//end S_break
-
-
-	        private Atrib Sententzia_prima()    {
 	        
-	                Atrib sententzia_prima_break, adierazpena_true, adierazpena_false;
-	                A adierazpena;
-	                int erreferentzia;
-	                
-	                if (look.T_token().equals("if"))
-	                  {
-	                  Emparejar("if");
-	                  adierazpena = Adierazpena();
-	                  adierazpena_true = adierazpena.getAdierazpena_true();
-	                  adierazpena_false = adierazpena.getAdierazpena_false();
-	                  sententzia_prima_break = adierazpena_true;
-	                  erreferentzia = codigo.Obten_ref_codigo();
-	                  codigo.Ag_osatu(adierazpena_false.lcont(),erreferentzia);
-	                  }
-	                else {
-	                  // hasi_lista(lortu_erref())
-	                  erreferentzia = codigo.Obten_ref_codigo();
-	                  sententzia_prima_break = new Atrib();
-	                  sententzia_prima_break.hasi_lista(erreferentzia);
-	                  // end hasi_lista(lortu_erref())
-	                  codigo.Ag_gehitu("goto ");
-	                }
-	            
-	                return sententzia_prima_break;
-	        
-	        } //end Sententzia_prima
-
 	        private Atrib S_get() {
 
 	                Atrib sententzia_break = new Atrib();
