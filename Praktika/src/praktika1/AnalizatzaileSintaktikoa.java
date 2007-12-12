@@ -52,5 +52,10 @@ public class AnalizatzaileSintaktikoa {
 	 public int M{
 	 return lortu_erreferentzia();
 	 }
-
+	 
+	 public void Aukerazko_id()
+	 { 
+	 	if (look.T_Token().equals("Id"))
+	 		match("Id");
 }
+
