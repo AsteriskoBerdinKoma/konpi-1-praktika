@@ -346,7 +346,7 @@ public class Analex {
 		switch (tokenEgoera) {
 		case 1:
 			if (isHitzErreserbatua(car_aux)) {
-				car_dos = "HE";
+				car_dos = car_aux;
 			} else {
 				car_dos = "ID";
 			}
@@ -362,58 +362,58 @@ public class Analex {
 			car_dos = "ERREALA";
 			break;
 		case 9:
-			car_dos = "BANATZAILEA";//'('
+			car_dos = "(";
 			break;
 		case 12:
 			car_dos = "IRUZKINA";
 			break;
 		case 13:
-			car_dos = "ERAGIGAI_ARIT";//'+'
+			car_dos = "+";
 			break;
 		case 14:
-			car_dos = "ERAGIGAI_ARIT";//'-'
+			car_dos = "-";
 			break;
 		case 15:
-			car_dos = "ERAGIGAI_ARIT";//'*'
+			car_dos = "*";
 			break;
 		case 16:
-			car_dos = "ERAGIGAI_ARIT";//'/'
+			car_dos = "/'";
 			break;
 		case 17:
-			car_dos = "ERAGIGAI_ERL";//'>'
+			car_dos = ">";
 			break;
 		case 28:
-			car_dos = "ERAGIGAI_ERL";//'>='
+			car_dos = ">=";
 			break;
 		case 18:
-			car_dos = "ERAGIGAI_ERL";//'='
+			car_dos = "=";
 			break;
 		case 19:
-			car_dos = "ERAGIGAI_ERL";//'<'
+			car_dos = "<";
 			break;
 		case 29:
-			car_dos = "ERAGIGAI_ERL";//'<='
+			car_dos = "<=";
 			break;
 		case 20:
-			car_dos = "BANATZAILEA";//':'
+			car_dos = ":";
 			break;
 		case 21:
-			car_dos = "ESLEIPENA";//':='
+			car_dos = ":=";
 			break;
 		case 22:
-			car_dos = "BANATZAILEA";//','
+			car_dos = ",";
 			break;
 		case 23:
-			car_dos = "BANATZAILEA";//';'
+			car_dos = ";";
 			break;
 		case 24:
-			car_dos = "BANATZAILEA";//')'
+			car_dos = ")";
 			break;
 		case 25:
-			car_dos = "BANATZAILEA";//'{'
+			car_dos = "{";
 			break;
 		case 26:
-			car_dos = "BANATZAILEA"; //'}'
+			car_dos = "}";
 			break;
 		case 27:
 			car_dos = "BEREIZLEA"; //' ','\t','\n'
