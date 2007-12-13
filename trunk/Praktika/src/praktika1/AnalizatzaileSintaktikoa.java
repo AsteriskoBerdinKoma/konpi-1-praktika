@@ -139,7 +139,7 @@ public class AnalizatzaileSintaktikoa {
 
 	} // end Bildu
 
-	private String Nuevoid() {
+	private String id_berria() {
 
 		String nid;
 
@@ -174,7 +174,7 @@ public class AnalizatzaileSintaktikoa {
 		String aldagaia_izena, id_izena;
 
 		id_izena = look.getTokenIzena();
-		match("identificador");
+		match("ID");
 		aldagaia_izena = id_izena;
 
 		return aldagaia_izena;
@@ -215,17 +215,15 @@ public class AnalizatzaileSintaktikoa {
 		if (look.getTokenMota().equals("*")) {
 			match("*");
 			faktore_izena = Faktore();
-			gaia_prima1_hi = Nuevoid();
+			gaia_prima1_hi = id_berria();
 			kodea.Ag_gehitu(gaia_prima1_hi + ":= " + gaia_prima_hi + " * "
 					+ faktore_izena + ";");
 			gaia_prima1_izena = Gaia_prima(gaia_prima1_hi);
 			gaia_prima_izena = gaia_prima1_izena;
-		}
-
-		else if (look.getTokenMota().equals("/")) {
+		} else if (look.getTokenMota().equals("/")) {
 			match("/");
 			faktore_izena = Faktore();
-			gaia_prima1_hi = Nuevoid();
+			gaia_prima1_hi = id_berria();
 			kodea.Ag_gehitu(gaia_prima1_hi + ":= " + gaia_prima_hi + " / "
 					+ faktore_izena + ";");
 			gaia_prima1_izena = Gaia_prima(gaia_prima1_hi);
@@ -257,14 +255,14 @@ public class AnalizatzaileSintaktikoa {
 		if (look.getTokenMota().equals("+")) {
 			match("+");
 			gaia_izena = Gaia();
-			ad_bakuna_prima1_hi = Nuevoid();
+			ad_bakuna_prima1_hi = id_berria();
 			kodea.Ag_gehitu(ad_bakuna_prima1_hi + ":= " + ad_bakuna_prima_hi
 					+ " + " + gaia_izena + ";");
 			return Ad_bakuna_prima(ad_bakuna_prima1_hi);
 		} else if (look.getTokenMota().equals("-")) {
 			match("-");
 			gaia_izena = Gaia();
-			ad_bakuna_prima1_hi = Nuevoid();
+			ad_bakuna_prima1_hi = id_berria();
 			kodea.Ag_gehitu(ad_bakuna_prima1_hi + ":= " + ad_bakuna_prima_hi
 					+ " - " + gaia_izena + ";");
 			return Ad_bakuna_prima(ad_bakuna_prima1_hi);
@@ -286,6 +284,39 @@ public class AnalizatzaileSintaktikoa {
 
 	} // end Adierazpen_bakuna
 
+	private A Adierazpen_konplex(String aldagaia_hizena) {
+		A adierazpena = new A();
+		int erreferentzia1, erreferentzia2;
+		String adierazpen_bakuna1_izena, adierazpen_bakuna2_izena;
+		
+		if(look.getTokenIzena().equals("ascending")){
+			match("ascending");
+			match("from");
+			adierazpen_bakuna1_izena = Adierazpen_bakuna();
+			match("to");
+			adierazpen_bakuna2_izena = Adierazpen_bakuna();
+			
+			erreferentzia1 = kodea.lortu_erref();
+			adierazpena.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
+			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " <= " + aldagaia_hizena + " >=" + adierazpen_bakuna2_izena + " goto ");
+			erreferentzia2 = kodea.lortu_erref();
+			adierazpena.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+		} else if(look.getTokenIzena().equals("descending")){
+			match("descending");
+			match("from");
+			adierazpen_bakuna1_izena=Adierazpen_bakuna();
+			match("to");
+			adierazpen_bakuna2_izena=Adierazpen_bakuna();
+			
+			erreferentzia1 = kodea.lortu_erref();
+			adierazpena.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
+			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " <= " + aldagaia_hizena + " >=" + adierazpen_bakuna2_izena + " goto ");
+			erreferentzia2 = kodea.lortu_erref();
+			adierazpena.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+		}
+		return adierazpena;
+	}// end Adierazpen_konplex
+	
 	private String Erag_erl() {
 
 		String erag_erl_mota;
@@ -317,11 +348,11 @@ public class AnalizatzaileSintaktikoa {
 		erag_erl_mota = Erag_erl();
 		adierazpen_bakuna2_izena = Adierazpen_bakuna();
 
-		erreferentzia1 = kodea.Obten_ref_codigo();
+		erreferentzia1 = kodea.lortu_erref();
 		adierazpena.setAdierazpena_true(erreferentzia1);
 		kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " " + erag_erl_mota
 				+ " " + adierazpen_bakuna2_izena + " goto ");
-		erreferentzia2 = kodea.Obten_ref_codigo();
+		erreferentzia2 = kodea.lortu_erref();
 		adierazpena.setAdierazpena_false(erreferentzia2);
 		kodea.Ag_gehitu("goto ");
 
@@ -329,69 +360,8 @@ public class AnalizatzaileSintaktikoa {
 
 	} // end Adierazpena
 
-	private Atrib S_get() {
-
-		Atrib sententzia_break = new Atrib();
-		String aldagaia_izena;
-
-		match("get");
-		match("(");
-		aldagaia_izena = Aldagaia();
-		match(")");
-		match(";");
-		kodea.Ag_gehitu("read " + aldagaia_izena + ";");
-
-		return sententzia_break;
-
-	} // end S_get
-
-	private Atrib S_put_line() {
-
-		Atrib sententzia_break = new Atrib();
-		String adierazpen_bakuna_izena;
-
-		match("put_line");
-		match("(");
-		adierazpen_bakuna_izena = Adierazpen_bakuna();
-		match(")");
-		match(";");
-		kodea.Ag_gehitu("write " + adierazpen_bakuna_izena + ";");
-		kodea.Ag_gehitu("writeln;");
-
-		return sententzia_break;
-
-	}// end S_put_line
-
-	private Atrib S_repeat() {
-
-		int M1_erref, M2_erref, M3_erref;
-		A adierazpena;
-		Atrib adierazpena_true, adierazpena_false;
-		Atrib sententzia_break = new Atrib();
-		Atrib sententzia_zerrenda_break = new Atrib();
-
-		match("repeat");
-		M1_erref = M();
-		match("{");
-		sententzia_zerrenda_break = Sententzia_zerrenda();
-		match("}");
-		match("while");
-		M2_erref = M();
-		adierazpena = Adierazpena();
-		adierazpena_true = adierazpena.getAdierazpena_true();
-		adierazpena_false = adierazpena.getAdierazpena_false();
-		match(";");
-		M3_erref = M();
-		kodea.Ag_osatu(adierazpena_true.lcont(), M1_erref);
-		kodea.Ag_osatu(adierazpena_false.lcont(), M3_erref);
-		kodea.Ag_osatu(sententzia_zerrenda_break.lcont(), M2_erref);
-
-		return sententzia_break;
-
-	}// end S_repeat
-
 	private int M() {
-		return kodea.Obten_ref_codigo();
+		return kodea.lortu_erref();
 	} // end M
 
 	private Atrib N() {
@@ -399,7 +369,7 @@ public class AnalizatzaileSintaktikoa {
 		int erreferentzia;
 		Atrib N_hur = new Atrib();
 
-		erreferentzia = kodea.Obten_ref_codigo();
+		erreferentzia = kodea.lortu_erref();
 		// hasi_lista //
 		N_hur.hasi_lista(erreferentzia);
 		kodea.Ag_gehitu("goto ");
@@ -408,90 +378,97 @@ public class AnalizatzaileSintaktikoa {
 
 	} // end N
 
-	private Atrib S_if() {
+	private void Sententzia() {
 
 		int M1_erref, M2_erref, M3_erref;
-		A adierazpena;
-		Atrib adierazpena_true, adierazpena_false;
-		Atrib sententzia_break = new Atrib();
-		Atrib sententzia_zerrenda1_break = new Atrib();
-		Atrib sententzia_zerrenda2_break = new Atrib();
+		A adierazpena, adierazpen_konplex;
+		Atrib adierazpena_true, adierazpena_false, adierazpen_konplex_true, adierazpen_konplex_false;
 		Atrib N_hur = new Atrib();
-
-		Atrib lis1, lis2, lis_if;
-		lis1 = new Atrib();
-		lis2 = new Atrib();
-		lis_if = new Atrib();
-
-		match("if");
-		adierazpena = Adierazpena();
-		adierazpena_true = adierazpena.getAdierazpena_true();
-		adierazpena_false = adierazpena.getAdierazpena_false();
-		match("then");
-		M1_erref = M();
-		match("{");
-		sententzia_zerrenda1_break = Sententzia_zerrenda();
-		match("}");
-		match("else");
-		N_hur = N();
-		M2_erref = M();
-		match("{");
-		sententzia_zerrenda2_break = Sententzia_zerrenda();
-		match("}");
-		match(";");
-		M3_erref = M();
-		kodea.Ag_osatu(adierazpena_true.lcont(), M1_erref);
-		kodea.Ag_osatu(adierazpena_false.lcont(), M2_erref);
-		kodea.Ag_osatu(N_hur.lcont(), M3_erref);
-		sententzia_break.Copiar_lcont(Bildu(sententzia_zerrenda1_break.lcont(),
-				sententzia_zerrenda2_break.lcont()));
-		return sententzia_break;
-
-	}// end S_if
-
-	private Atrib Sententzia() {
-
-		Atrib sententzia_break = new Atrib();
-		String aldagaia_izena, adierazpen_bakuna_izena;
+		String aldagaia_izena, adierazpen_bakuna_izena, aldagaia_hizena;
 
 		if (look.getTokenMota().equals("ID")) {
-			aldagaia_izena = Aldagaia(); // aldagaia_izena =
-			// look.Str_token();
+			aldagaia_izena = Aldagaia(); // aldagaia_izena = look.Str_token();
 			match(":=");
 			adierazpen_bakuna_izena = Adierazpen_bakuna();
 			match(";");
 			kodea.Ag_gehitu(aldagaia_izena + ":=" + adierazpen_bakuna_izena
 					+ ";");
-		} else if (look.getTokenIzena().equals("if"))
-			sententzia_break = S_if();
-		else if (look.getTokenIzena().equals("repeat"))
-			sententzia_break = S_repeat();
-		else if (look.getTokenIzena().equals("get"))
-			sententzia_break = S_get();
-		else if (look.getTokenIzena().equals("put_line"))
-			sententzia_break = S_put_line();
-		return sententzia_break;
+		} else if (look.getTokenIzena().equals("if")) {
+			match("if");
+			adierazpena = Adierazpena();
+			adierazpena_true = adierazpena.getAdierazpena_true();
+			adierazpena_false = adierazpena.getAdierazpena_false();
+			match("then");
+			M1_erref = M();
+			Sententzia_zerrenda();
+			N_hur = N();
+			match("else");
+			M2_erref = M();
+			Sententzia_zerrenda();
+			match("end_if");
+			match(";");
+			M3_erref = M();
+			kodea.Ag_osatu(adierazpena_true.lcont(), M1_erref);
+			kodea.Ag_osatu(adierazpena_false.lcont(), M2_erref);
+			kodea.Ag_osatu(N_hur.lcont(), M3_erref);
+		} else if (look.getTokenIzena().equals("repeat")) {
+			match("repeat");
+			M1_erref = M();
+			Sententzia_zerrenda();
+			match("until");
+			adierazpena = Adierazpena();
+			adierazpena_true = adierazpena.getAdierazpena_true();
+			adierazpena_false = adierazpena.getAdierazpena_false();
+			match("end_repeat");
+			match(";");
+			M2_erref = M();
+			kodea.Ag_osatu(adierazpena_true.lcont(), M1_erref);
+			kodea.Ag_osatu(adierazpena_false.lcont(), M2_erref);
+		} else if (look.getTokenIzena().equals("get")) {
+			match("get");
+			match("(");
+			aldagaia_izena = Aldagaia();
+			match(")");
+			match(";");
+			kodea.Ag_gehitu("read " + aldagaia_izena + ";");
+		} else if (look.getTokenIzena().equals("for")) {
+			match("for");
+			M1_erref = M();
+			aldagaia_izena = Aldagaia();
+			aldagaia_hizena = aldagaia_izena;
+			adierazpen_konplex = Adierazpen_konplex(aldagaia_hizena);
+			adierazpen_konplex_true = adierazpen_konplex.getAdierazpena_true();
+			adierazpen_konplex_false = adierazpen_konplex.getAdierazpena_false();
+			match("do");
+			M2_erref = M();
+			Sententzia_zerrenda();
+			match("end_for");
+			match(";");
+			M3_erref = M();
+			kodea.Ag_gehitu("goto " + M1_erref + ";");
+			kodea.Ag_osatu(adierazpen_konplex_true.lcont(), M2_erref);
+			kodea.Ag_osatu(adierazpen_konplex_false.lcont(), M3_erref + 1);
+		} else if (look.getTokenIzena().equals("put_line")) {
+			match("put_line");
+			match("(");
+			adierazpen_bakuna_izena = Adierazpen_bakuna();
+			match(")");
+			match(";");
+			kodea.Ag_gehitu("write " + adierazpen_bakuna_izena + ";");
+			kodea.Ag_gehitu("writeln;");
+		}
 	}// end Sententzia
 
-	private Atrib Sententzia_zerrenda() {
-
-		Atrib sententzia_zerrenda_break = new Atrib();
-		Atrib sententzia_break = new Atrib();
-		Atrib sententzia_zerrenda1_break = new Atrib();
-
-		// int m_ref;
-		if ((look.getTokenIzena().equals("if"))
-				|| (look.getTokenIzena().equals("repeat"))
-				|| (look.getTokenIzena().equals("get"))
-				|| (look.getTokenIzena().equals("put_line"))
-				|| (look.getTokenMota().equals("ID"))) {
-			sententzia_break = Sententzia();
-			sententzia_zerrenda1_break = Sententzia_zerrenda();
-			sententzia_zerrenda_break.Copiar_lcont(Bildu(sententzia_break
-					.lcont(), sententzia_zerrenda1_break.lcont()));
+	private void Sententzia_zerrenda() {
+		if (look.getTokenMota().equals("ID")
+				|| look.getTokenIzena().equals("if")
+				|| look.getTokenIzena().equals("repeat")
+				|| look.getTokenIzena().equals("get")
+				|| look.getTokenIzena().equals("for")
+				|| look.getTokenIzena().equals("put_line")) {
+			Sententzia();
+			Sententzia_zerrenda();
 		}
-		return sententzia_zerrenda_break;
-
 	}// end Sententzia_zerrenda
 
 	private void Parametro_zerrendaren_bestea() {
@@ -524,9 +501,9 @@ public class AnalizatzaileSintaktikoa {
 
 		if (look.getTokenIzena().equals("out")) {
 			match("out");
-			par_mota_prima_balioa = "ref_";
+			par_mota_prima_balioa = "ref";
 		} else
-			par_mota_prima_balioa = "val_";
+			par_mota_prima_balioa = "val";
 
 		return par_mota_prima_balioa;
 
@@ -541,7 +518,7 @@ public class AnalizatzaileSintaktikoa {
 			par_mota_balioa = Par_mota_prima();
 		} else { // if (look.getTokenIzena().equals("out"))
 			match("out");
-			par_mota_balioa = "ref_";
+			par_mota_balioa = "ref";
 		}
 
 		return par_mota_balioa;

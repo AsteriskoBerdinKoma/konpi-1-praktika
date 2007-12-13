@@ -377,7 +377,7 @@ public class Analex {
 			car_dos = "*";
 			break;
 		case 16:
-			car_dos = "/'";
+			car_dos = "/";
 			break;
 		case 17:
 			car_dos = ">";

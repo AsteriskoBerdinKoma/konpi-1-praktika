@@ -49,7 +49,7 @@ public class Bit_kodea {
       
    }//end Ag_osatu
 
-   final public int Obten_ref_codigo(){
+   final public int lortu_erref(){
    
 	   return(sig_inst);
      
