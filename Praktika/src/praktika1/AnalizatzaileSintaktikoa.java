@@ -61,7 +61,7 @@ public class AnalizatzaileSintaktikoa {
 			lcont = new Vector();
 		}
 
-		public Vector lcont() {
+		public Vector lkont() {
 			return lcont;
 		}
 
@@ -285,7 +285,7 @@ public class AnalizatzaileSintaktikoa {
 	} // end Adierazpen_bakuna
 
 	private A Adierazpen_konplex(String aldagaia_hizena) {
-		A adierazpena = new A();
+		A adierazpen_konplex = new A();
 		int erreferentzia1, erreferentzia2;
 		String adierazpen_bakuna1_izena, adierazpen_bakuna2_izena;
 		
@@ -296,11 +296,13 @@ public class AnalizatzaileSintaktikoa {
 			match("to");
 			adierazpen_bakuna2_izena = Adierazpen_bakuna();
 			
+			kodea.Ag_gehitu(aldagaia_hizena + ":=" + adierazpen_bakuna1_izena + ";");
 			erreferentzia1 = kodea.lortu_erref();
-			adierazpena.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
-			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " <= " + aldagaia_hizena + " >=" + adierazpen_bakuna2_izena + " goto ");
+			adierazpen_konplex.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
+			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " <= " + aldagaia_hizena + " <=" + adierazpen_bakuna2_izena + " goto ");
 			erreferentzia2 = kodea.lortu_erref();
-			adierazpena.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+			adierazpen_konplex.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+			kodea.Ag_gehitu("goto ");
 		} else if(look.getTokenIzena().equals("descending")){
 			match("descending");
 			match("from");
@@ -308,13 +310,15 @@ public class AnalizatzaileSintaktikoa {
 			match("to");
 			adierazpen_bakuna2_izena=Adierazpen_bakuna();
 			
+			kodea.Ag_gehitu(aldagaia_hizena + ":=" + adierazpen_bakuna1_izena + ";");
 			erreferentzia1 = kodea.lortu_erref();
-			adierazpena.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
-			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " <= " + aldagaia_hizena + " >=" + adierazpen_bakuna2_izena + " goto ");
+			adierazpen_konplex.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
+			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " >= " + aldagaia_hizena + " >=" + adierazpen_bakuna2_izena + " goto ");
 			erreferentzia2 = kodea.lortu_erref();
-			adierazpena.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+			adierazpen_konplex.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+			kodea.Ag_gehitu("goto ");
 		}
-		return adierazpena;
+		return adierazpen_konplex;
 	}// end Adierazpen_konplex
 	
 	private String Erag_erl() {
@@ -408,9 +412,9 @@ public class AnalizatzaileSintaktikoa {
 			match("end_if");
 			match(";");
 			M3_erref = M();
-			kodea.Ag_osatu(adierazpena_true.lcont(), M1_erref);
-			kodea.Ag_osatu(adierazpena_false.lcont(), M2_erref);
-			kodea.Ag_osatu(N_hur.lcont(), M3_erref);
+			kodea.Ag_osatu(adierazpena_true.lkont(), M1_erref);
+			kodea.Ag_osatu(adierazpena_false.lkont(), M2_erref);
+			kodea.Ag_osatu(N_hur.lkont(), M3_erref);
 		} else if (look.getTokenIzena().equals("repeat")) {
 			match("repeat");
 			M1_erref = M();
@@ -422,8 +426,8 @@ public class AnalizatzaileSintaktikoa {
 			match("end_repeat");
 			match(";");
 			M2_erref = M();
-			kodea.Ag_osatu(adierazpena_true.lcont(), M1_erref);
-			kodea.Ag_osatu(adierazpena_false.lcont(), M2_erref);
+			kodea.Ag_osatu(adierazpena_true.lkont(), M1_erref);
+			kodea.Ag_osatu(adierazpena_false.lkont(), M2_erref);
 		} else if (look.getTokenIzena().equals("get")) {
 			match("get");
 			match("(");
@@ -446,8 +450,8 @@ public class AnalizatzaileSintaktikoa {
 			match(";");
 			M3_erref = M();
 			kodea.Ag_gehitu("goto " + M1_erref + ";");
-			kodea.Ag_osatu(adierazpen_konplex_true.lcont(), M2_erref);
-			kodea.Ag_osatu(adierazpen_konplex_false.lcont(), M3_erref + 1);
+			kodea.Ag_osatu(adierazpen_konplex_true.lkont(), M2_erref);
+			kodea.Ag_osatu(adierazpen_konplex_false.lkont(), M3_erref + 1);
 		} else if (look.getTokenIzena().equals("put_line")) {
 			match("put_line");
 			match("(");
