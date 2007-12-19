@@ -1,0 +1,36 @@
+0:prog froga4; 
+1:int int1; 
+2:int int2; 
+3:int int3; 
+4:real fl1; 
+5:real fl2; 
+6:_t0:= int1 + int2; 
+7:_t1:= _t0 * int3; 
+8:int3:=_t1; 
+9:if fl1 < fl2 goto 11; 
+10:goto 22; 
+11:if int1 > int2 goto 13; 
+12:goto 16; 
+13:write int1; 
+14:writeln; 
+15:goto 18; 
+16:write int2; 
+17:writeln; 
+18:_t2:= fl1 + fl2; 
+19:write _t2; 
+20:writeln; 
+21:goto 23; 
+22:read fl1; 
+23:_t3:= int1 + 1; 
+24:int1:=_t3; 
+25:write int1; 
+26:writeln; 
+27:a:=10 
+28:if a >= 1 goto 30 
+29:goto 35; 
+30:_t4:= int + a; 
+31:int:=_t4; 
+32:_t5 := a - 1 
+33:a := _t5; 
+34:goto 28 
+35:halt; 

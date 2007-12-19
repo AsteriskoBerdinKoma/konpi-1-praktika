@@ -1,0 +1,19 @@
+program froga3 is
+
+var z,y: integer ;
+var w,v: float;
+
+begin
+	get (y);
+	z:= 0;
+
+	repeat
+		y:=y+1;
+		if y>3 then
+			y:= y +6;
+		else
+			y:= z;
+		end_if;
+
+	until z=3 end_repeat;
+end_program;
