@@ -1,0 +1,51 @@
+0:prog adibidea; 
+1:int a; 
+2:int b; 
+3:int c; 
+4:real d; 
+5:real e; 
+6:proc batu; 
+7:val_int x; 
+8:val_int y; 
+9:ref_int emaitza; 
+10:int lag; 
+11:real f; 
+12:lag:=a; 
+13:c:=b; 
+14:_t0:= lag - 1; 
+15:lag:=_t0; 
+16:if b < lag goto 18; 
+17:goto 21; 
+18:_t1:= c + 1; 
+19:c:=_t1; 
+20:goto 24; 
+21:_t2:= d * 0.5E+17; 
+22:_t3:= e + _t2; 
+23:d:=_t3; 
+24:if lag > 0 goto 12; 
+25:goto 26; 
+26:_t4:= b + 1; 
+27:a:=_t4 
+28:_t5:= c * 30; 
+29:if a <= _t5 goto 31 
+30:goto 36; 
+31:_t6:= f * 2.0E2; 
+32:f:=_t6; 
+33:_t7 := a + 1 
+34:a := _t7; 
+35:goto 29 
+36:; 
+37:read a; 
+38:read b; 
+39:_t8:= 1 / b; 
+40:d:=_t8; 
+41:_t9:= 1 / a; 
+42:e:=_t9; 
+43:_t10:= c * d; 
+44:_t11:= c * _t10; 
+45:_t12:= _t11 + e; 
+46:c:=_t12; 
+47:_t13:= c * c; 
+48:write _t13; 
+49:writeln; 
+50:halt; 
