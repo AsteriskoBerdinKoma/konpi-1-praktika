@@ -48,6 +48,17 @@ public class Bit_kodea {
 	    }
       
    }//end Ag_osatu
+   
+   final public void Ag_osatu (int indizea,int referencia){  
+
+	    String n_inst;
+	    	
+       inst=(String)vector.elementAt(indizea);
+       n_inst=(inst+referencia+";");
+       vector.removeElementAt(indizea);
+	    	vector.insertElementAt(n_inst,indizea);
+     
+  }//end Ag_osatu
 
    final public int lortu_erref(){
    

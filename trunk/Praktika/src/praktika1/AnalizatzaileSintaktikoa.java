@@ -3,6 +3,8 @@ package praktika1;
 import java.io.IOException;
 import java.util.Vector;
 
+import com.sun.org.apache.bcel.internal.generic.LOR;
+
 public class AnalizatzaileSintaktikoa {
 
 	int id;
@@ -284,42 +286,60 @@ public class AnalizatzaileSintaktikoa {
 
 	} // end Adierazpen_bakuna
 
-	private A Adierazpen_konplex(String aldagaia_hizena) {
-		A adierazpen_konplex = new A();
-		int erreferentzia1, erreferentzia2;
-		String adierazpen_bakuna1_izena, adierazpen_bakuna2_izena;
-		
+	private String Aukera() {
+		String aukera_izena = "";
 		if(look.getTokenIzena().equals("ascending")){
 			match("ascending");
-			match("from");
-			adierazpen_bakuna1_izena = Adierazpen_bakuna();
-			match("to");
-			adierazpen_bakuna2_izena = Adierazpen_bakuna();
-			
-			kodea.Ag_gehitu(aldagaia_hizena + ":=" + adierazpen_bakuna1_izena + ";");
-			erreferentzia1 = kodea.lortu_erref();
-			adierazpen_konplex.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
-			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " <= " + aldagaia_hizena + " <=" + adierazpen_bakuna2_izena + " goto ");
-			erreferentzia2 = kodea.lortu_erref();
-			adierazpen_konplex.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
-			kodea.Ag_gehitu("goto ");
-		} else if(look.getTokenIzena().equals("descending")){
+			aukera_izena = "ascending";
+		}else if(look.getTokenIzena().equals("descending")){
 			match("descending");
-			match("from");
-			adierazpen_bakuna1_izena=Adierazpen_bakuna();
-			match("to");
-			adierazpen_bakuna2_izena=Adierazpen_bakuna();
-			
-			kodea.Ag_gehitu(aldagaia_hizena + ":=" + adierazpen_bakuna1_izena + ";");
-			erreferentzia1 = kodea.lortu_erref();
-			adierazpen_konplex.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
-			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " >= " + aldagaia_hizena + " >=" + adierazpen_bakuna2_izena + " goto ");
-			erreferentzia2 = kodea.lortu_erref();
-			adierazpen_konplex.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
-			kodea.Ag_gehitu("goto ");
-		}
-		return adierazpen_konplex;
-	}// end Adierazpen_konplex
+			aukera_izena = "descending";
+			}
+		return aukera_izena;
+	}
+	
+//	private A Adierazpen_konplex(String aldagaia_hizena) {
+//		A adierazpen_konplex = new A();
+//		int erreferentzia1, erreferentzia2;
+//		String adierazpen_bakuna1_izena, adierazpen_bakuna2_izena;
+//		
+//		if(look.getTokenIzena().equals("ascending")){
+//			match("ascending");
+//			match("from");
+//			adierazpen_bakuna1_izena = Adierazpen_bakuna();
+//			kodea.Ag_gehitu(aldagaia_hizena + ":=" + adierazpen_bakuna1_izena + ";");
+//			int l = kodea.lortu_erref();
+//			kodea.Ag_gehitu("goto ");
+//			match("to");
+//			adierazpen_bakuna2_izena = Adierazpen_bakuna();
+//			
+//			String idb = id_berria();
+//			kodea.Ag_gehitu(idb + ":=" + aldagaia_hizena + "+1");
+//			kodea.Ag_gehitu(aldagaia_hizena + ":=" + idb);
+//			erreferentzia1 = kodea.lortu_erref();
+//			kodea.Ag_osatu(l, erreferentzia1);
+//			adierazpen_konplex.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
+//			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " <= " + aldagaia_hizena + " <=" + adierazpen_bakuna2_izena + " goto ");
+//			erreferentzia2 = kodea.lortu_erref();
+//			adierazpen_konplex.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+//			kodea.Ag_gehitu("goto ");
+//		} else if(look.getTokenIzena().equals("descending")){
+//			match("descending");
+//			match("from");
+//			adierazpen_bakuna1_izena=Adierazpen_bakuna();
+//			match("to");
+//			adierazpen_bakuna2_izena=Adierazpen_bakuna();
+//			
+//			kodea.Ag_gehitu(aldagaia_hizena + ":=" + adierazpen_bakuna1_izena + ";");
+//			erreferentzia1 = kodea.lortu_erref();
+//			adierazpen_konplex.setAdierazpena_true(erreferentzia1);//adierazpen_konplex.true:= lortu_erref();
+//			kodea.Ag_gehitu("if " + adierazpen_bakuna1_izena + " >= " + aldagaia_hizena + " >=" + adierazpen_bakuna2_izena + " goto ");
+//			erreferentzia2 = kodea.lortu_erref();
+//			adierazpen_konplex.setAdierazpena_false(erreferentzia2);//adierazpen_konplex.false:= lortu_erref();
+//			kodea.Ag_gehitu("goto ");
+//		}
+//		return adierazpen_konplex;
+//	}// end Adierazpen_konplex
 	
 	private String Erag_erl() {
 
@@ -384,11 +404,11 @@ public class AnalizatzaileSintaktikoa {
 
 	private void Sententzia() {
 
-		int M1_erref, M2_erref, M3_erref;
+		int M1_erref, M2_erref, M3_erref, ad_true, ad_false;
 		A adierazpena, adierazpen_konplex;
 		Atrib adierazpena_true, adierazpena_false, adierazpen_konplex_true, adierazpen_konplex_false;
 		Atrib N_hur = new Atrib();
-		String aldagaia_izena, adierazpen_bakuna_izena, aldagaia_hizena;
+		String aldagaia_izena, adierazpen_bakuna_izena, aldagaia_hizena, adierazpen_bakuna1_izena, adierazpen_bakuna2_izena, aukera_izena, id;
 
 		if (look.getTokenMota().equals("ID")) {
 			aldagaia_izena = Aldagaia(); // aldagaia_izena = look.Str_token();
@@ -437,21 +457,38 @@ public class AnalizatzaileSintaktikoa {
 			kodea.Ag_gehitu("read " + aldagaia_izena + ";");
 		} else if (look.getTokenIzena().equals("for")) {
 			match("for");
-			M1_erref = M();
 			aldagaia_izena = Aldagaia();
 			aldagaia_hizena = aldagaia_izena;
-			adierazpen_konplex = Adierazpen_konplex(aldagaia_hizena);
-			adierazpen_konplex_true = adierazpen_konplex.getAdierazpena_true();
-			adierazpen_konplex_false = adierazpen_konplex.getAdierazpena_false();
+			aukera_izena = Aukera();
+			match("from");
+			adierazpen_bakuna1_izena = Adierazpen_bakuna();
+			kodea.Ag_gehitu(aldagaia_hizena + ":=" + adierazpen_bakuna1_izena);
+			match("to");
+			adierazpen_bakuna2_izena = Adierazpen_bakuna();
 			match("do");
-			M2_erref = M();
-			Sententzia_zerrenda();
+			ad_true = kodea.lortu_erref();
+			ad_false = -1;
+			if(aukera_izena.equals("ascending")){
+				kodea.Ag_gehitu("if " + aldagaia_hizena + " <= " + adierazpen_bakuna2_izena + " goto " + (kodea.lortu_erref() + 2));
+				ad_false = kodea.lortu_erref();
+				kodea.Ag_gehitu("goto ");
+				Sententzia_zerrenda();
+				id = id_berria();
+				kodea.Ag_gehitu(id + " := " + aldagaia_hizena + " + 1");
+				kodea.Ag_gehitu(aldagaia_hizena + " := " + id + ";");
+			} else if(aukera_izena.equals("descending")){
+				kodea.Ag_gehitu("if " + aldagaia_hizena + " >= " + adierazpen_bakuna2_izena + " goto " + (kodea.lortu_erref() + 2));
+				ad_false = kodea.lortu_erref();
+				kodea.Ag_gehitu("goto ");
+				Sententzia_zerrenda();
+				id = id_berria();
+				kodea.Ag_gehitu(id + " := " + aldagaia_hizena + " - 1");
+				kodea.Ag_gehitu(aldagaia_hizena + " := " + id + ";");
+			}
 			match("end_for");
 			match(";");
-			M3_erref = M();
-			kodea.Ag_gehitu("goto " + M1_erref + ";");
-			kodea.Ag_osatu(adierazpen_konplex_true.lkont(), M2_erref);
-			kodea.Ag_osatu(adierazpen_konplex_false.lkont(), M3_erref + 1);
+			kodea.Ag_gehitu("goto " + ad_true);
+			kodea.Ag_osatu(ad_false, kodea.lortu_erref());
 		} else if (look.getTokenIzena().equals("put_line")) {
 			match("put_line");
 			match("(");
