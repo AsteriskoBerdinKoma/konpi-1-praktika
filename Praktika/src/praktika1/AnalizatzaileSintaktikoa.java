@@ -3,8 +3,6 @@ package praktika1;
 import java.io.IOException;
 import java.util.Vector;
 
-import com.sun.org.apache.bcel.internal.generic.LOR;
-
 public class AnalizatzaileSintaktikoa {
 
 	int id;
