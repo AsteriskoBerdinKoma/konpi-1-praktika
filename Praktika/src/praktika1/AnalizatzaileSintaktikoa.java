@@ -613,7 +613,7 @@ public class AnalizatzaileSintaktikoa {
 		match("end_procedure");
 		Aukerazko_id();
 		match(";");
-		kodea.Ag_gehitu(";");
+		kodea.Ag_gehitu("endproc;");
 
 	}// end Azpiprogramaren_erazagupena
 

@@ -1,0 +1,25 @@
+	program adibidea is
+		var a, b, c : integer;
+		var d, e : float;
+	(* hau iruzkin bat da *)
+	procedure batu(x, y : in integer; emaitza : in out integer)is
+	var lag : integer;
+	var f : float;
+	begin
+		repeat 
+		lag := a; c := b;
+			lag := lag-1;
+			if b<lag then c := c+1 ; else d:= e+d*0.5E+17; end_if;
+		until lag > 0 end_repeat ;
+		for a ascending from 1 to c*30 do f:=f*2.0E2; end_for;
+	end_procedure batu;
+
+	begin    
+		get(a); get(b);
+		d := 1/b;
+		e := 1/a;
+		(*batu(a,b,c); (* hau 9 edo nota altuagoko 
+				    * praktiketan soilik*)
+		c := c*(c*d)+e;		
+		put_line(c*c);
+	end_program;

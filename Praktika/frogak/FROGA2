@@ -1,0 +1,6 @@
+program froga2 is
+	var a,b,c : integer;
+	begin
+		a:=b*c*(a-2/3);
+		b:=(a+a*a/3)/5-2;
+end_program;

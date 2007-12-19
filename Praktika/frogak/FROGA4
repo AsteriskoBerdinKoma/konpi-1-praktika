@@ -1,0 +1,30 @@
+program froga4 is
+
+    var int1,int2,int3:integer;
+	var fl1,fl2:float;
+
+begin
+
+    int3:=(int1+int2)*int3;
+    if fl1<fl2 then
+
+	  if int1>int2 then
+	  	put_line(int1);
+	  else
+	  	put_line(int2);
+	  end_if;
+
+	  put_line(fl1+fl2);
+
+	else
+      get(fl1);
+	end_if;
+
+	int1:=int1+1;
+	put_line(int1);
+	for a descending from 10 to 1 do
+	  int:=int+a;
+	end_for;
+
+
+end_program froga4;
