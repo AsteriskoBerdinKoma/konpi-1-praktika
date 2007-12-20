@@ -39,14 +39,13 @@ public class Analex {
 			"until", "end_repeat", "for", "ascending", "from", "to", "do",
 			"end_for", "descending", "get","end_procedure",
 			"put_line",
-			"goto",
 
 			// Berdina baina letra larriz
 
-			"PROGRAM", "PROCEDURE", "IS", "BEGIN", "END_PROGRAM", "VAR",
+			"PROGRAM" , "PROCEDURE", "IS", "BEGIN", "END_PROGRAM", "VAR",
 			"INTEGER", "FLOAT", "IN", "OUT", "IF", "THEN", "ELSE", "END_IF",
 			"REPEAT", "UNTIL", "END_REPEAT", "FOR", "ASCENDING", "FROM", "TO",
-			"DO", "END_FOR", "DESCENDING", "GET","END_PROCEDURE", "PUT_LINE", "GOTO" };
+			"DO", "END_FOR", "DESCENDING", "GET","END_PROCEDURE", "PUT_LINE"};
 
 	// klasearen eraikitzaileak fitxategiaren izena behar du
 	public Analex(String fitxIzena) throws FileNotFoundException, IOException {
@@ -141,11 +140,11 @@ public class Analex {
 		case ')':
 			return (4);
 
-		case '{':
-			return (8);
-
-		case '}':
-			return (9);
+//		case '{':
+//			return (8);
+//
+//		case '}':
+//			return (9);
 
 		case 'z':
 			return (19); // zuriuneak
@@ -409,12 +408,12 @@ public class Analex {
 		case 24:
 			car_dos = ")";
 			break;
-		case 25:
-			car_dos = "{";
-			break;
-		case 26:
-			car_dos = "}";
-			break;
+//		case 25:
+//			car_dos = "{";
+//			break;
+//		case 26:
+//			car_dos = "}";
+//			break;
 		case 27:
 			car_dos = "BEREIZLEA"; //' ','\t','\n'
 			break;
